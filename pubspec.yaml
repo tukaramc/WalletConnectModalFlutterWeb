@@ -6,6 +6,7 @@ repository: https://github.com/WalletConnect/WalletConnectModalFlutter
 environment:
   sdk: '>=2.19.0 <4.0.0'
 
+
 dependencies:
   appcheck: ^1.0.6
   cupertino_icons: ^1.0.6
@@ -24,13 +25,13 @@ dependencies:
   universal_io: ^2.2.2
   url_launcher: ^6.2.4
   w_common: ^3.0.1
-  walletconnect_flutter_v2: ^2.2.2
-
-dependency_overrides:
   walletconnect_flutter_v2:
     git:
       url: https://github.com/tukaramc/WalletConnectFlutterV2
-      ref: 3734500597ce3df019c62d9116de3ea0ea821441
+      ref: 3734500597ce3df019c62d9116de3ea0ea821441 
+  # walletconnect_flutter_v2: ^2.2.2
+
+  
 
 
 dev_dependencies:
