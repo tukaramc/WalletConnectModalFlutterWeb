@@ -28,7 +28,7 @@ dependencies:
   walletconnect_flutter_v2:
     git:
       url: https://github.com/tukaramc/WalletConnectFlutterV2
-      ref: f9399116bf9e8a9debd1564cf94fc95d54691ac1
+      ref: 791ed6d1f07507a07da201820dbaa23cf0bfa0d8
   # walletconnect_flutter_v2: ^2.2.2
 
   

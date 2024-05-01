@@ -596,10 +596,10 @@ packages:
     dependency: transitive
     description:
       name: package_info_plus
-      sha256: b93d8b4d624b4ea19b0a5a208b2d6eff06004bc3ce74c06040b120eeadd00ce0
+      sha256: "2c582551839386fa7ddbc7770658be7c0f87f388a4bff72066478f597c34d17f"
       url: "https://pub.dev"
     source: hosted
-    version: "8.0.0"
+    version: "7.0.0"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -1073,8 +1073,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: f9399116bf9e8a9debd1564cf94fc95d54691ac1
-      resolved-ref: f9399116bf9e8a9debd1564cf94fc95d54691ac1
+      ref: "791ed6d1f07507a07da201820dbaa23cf0bfa0d8"
+      resolved-ref: "791ed6d1f07507a07da201820dbaa23cf0bfa0d8"
       url: "https://github.com/tukaramc/WalletConnectFlutterV2"
     source: git
     version: "2.2.3"
