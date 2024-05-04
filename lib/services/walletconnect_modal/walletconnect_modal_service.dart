@@ -73,6 +73,7 @@ class WalletConnectModalService extends ChangeNotifier
   ConnectResponse? connectResponse;
   Future<SessionData>? get sessionFuture => connectResponse?.session.future;
   BuildContext? context;
+  BuildContext? popupContext;
 
   // WalletConnectModalThemeData? _themeData;
 
@@ -222,14 +223,16 @@ class WalletConnectModalService extends ChangeNotifier
         ),
         useSafeArea: true,
         context: context,
-        builder: (context) {
+        builder: (context1) {
+          popupContext = context1;
           return root;
         },
       );
     } else {
       await showDialog(
         context: context,
-        builder: (context) {
+        builder: (context1) {
+          popupContext = context1;
           return root;
         },
       );
@@ -248,10 +251,10 @@ class WalletConnectModalService extends ChangeNotifier
     }
 
     toastUtils.instance.clear();
-    if (context != null) {
+    if (popupContext != null) {
       // _isOpen and notifyListeners() are handled when we call Navigator.pop()
       // by the open() method
-      Navigator.pop(context!);
+      Navigator.pop(popupContext!);
     } else {
       notifyListeners();
     }
