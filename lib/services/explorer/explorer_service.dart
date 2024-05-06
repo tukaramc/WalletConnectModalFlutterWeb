@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
@@ -15,6 +13,7 @@ import 'package:walletconnect_modal_flutter/services/utils/platform/platform_uti
 import 'package:walletconnect_modal_flutter/services/utils/url/url_utils_singleton.dart';
 import 'package:walletconnect_modal_flutter/services/utils/logger/logger_util.dart';
 import 'package:walletconnect_modal_flutter/widgets/grid_list/grid_list_item_model.dart';
+import 'package:walletconnect_modal_flutter/CommonPlateformFiles/Junction.dart';
 
 class ExplorerService implements IExplorerService {
   @override
@@ -70,9 +69,10 @@ class ExplorerService implements IExplorerService {
         platform = 'Desktop';
         break;
       case PlatformType.mobile:
-        if (Platform.isIOS) {
+        if (CommonPlatformService.isIOS()) {
           platform = 'iOS';
-        } else if (Platform.isAndroid) {
+        }
+        if (CommonPlatformService.isAndroid()) {
           platform = 'Android';
         } else {
           platform = 'Mobile';
@@ -125,7 +125,7 @@ class ExplorerService implements IExplorerService {
     for (Listing item in _listings) {
       String? uri = item.mobile.native;
       // If we are on android, and we have an android link, get the package id and use that
-      if (Platform.isAndroid && item.app.android != null) {
+      if (CommonPlatformService.isAndroid() && item.app.android != null) {
         uri = getAndroidPackageId(item.app.android);
       }
       bool installed = await urlUtils.instance.isInstalled(uri);

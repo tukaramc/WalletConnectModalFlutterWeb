@@ -14,7 +14,10 @@ import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 class WCMPage extends StatefulWidget {
   const WCMPage({
     super.key,
+    required this.web3App,
   });
+
+  final IWeb3App web3App;
 
   @override
   State<WCMPage> createState() => _WCMPageState();
@@ -29,7 +32,6 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
   final List<ChainMetadata> _selectedChains = [];
 
   bool _isConnected = false;
-  IWeb3App? _web3App;
 
   @override
   void initState() {
@@ -39,41 +41,8 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
   }
 
   Future<void> initialize() async {
-    _web3App = Web3App(
-      core: Core(
-        projectId: '87a36cf720ad6f0ef33b7e06007230a0',
-      ),
-      metadata: const PairingMetadata(
-        name: 'Flutter Dapp Example',
-        description: 'Flutter Dapp Example',
-        url: 'https://www.walletconnect.com/',
-        icons: ['https://walletconnect.com/walletconnect-logo.png'],
-        redirect: Redirect(
-          native: 'flutterdapp://',
-          universal: 'https://www.walletconnect.com',
-        ),
-      ),
-    );
-
-    // _web3App!.onSessionPing.subscribe(_onSessionPing);
-    // _web3App!.onSessionEvent.subscribe(_onSessionEvent);
-
-    await _web3App!.init();
-
-    // Loop through all the chain data
-    for (final ChainMetadata chain in ChainData.chains) {
-      // Loop through the events for that chain
-      for (final event in getChainEvents(chain.type)) {
-        _web3App!.registerEventHandler(
-          chainId: chain.namespace,
-          event: event,
-          handler: null,
-        );
-      }
-    }
-
     _walletConnectModalService = WalletConnectModalService(
-      web3App: _web3App!,
+      web3App: widget.web3App,
       recommendedWalletIds: {
         'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
         '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust
@@ -81,12 +50,12 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
       // excludedWalletState: ExcludedWalletState.all,
     );
 
-    _web3App!.onSessionConnect.subscribe(_onWeb3AppConnect);
-    _web3App!.onSessionDelete.subscribe(_onWeb3AppDisconnect);
+    widget.web3App.onSessionConnect.subscribe(_onWeb3AppConnect);
+    widget.web3App.onSessionDelete.subscribe(_onWeb3AppDisconnect);
 
     await _walletConnectModalService?.init();
 
-    _isConnected = _web3App!.sessions.getAll().isNotEmpty;
+    _isConnected = widget.web3App.sessions.getAll().isNotEmpty;
 
     setState(() {
       _initialized = true;
@@ -95,8 +64,8 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _web3App!.onSessionConnect.unsubscribe(_onWeb3AppConnect);
-    _web3App!.onSessionDelete.unsubscribe(_onWeb3AppDisconnect);
+    widget.web3App.onSessionConnect.unsubscribe(_onWeb3AppConnect);
+    widget.web3App.onSessionDelete.unsubscribe(_onWeb3AppDisconnect);
     super.dispose();
   }
 
@@ -152,21 +121,17 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('WalletConnectModal'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-              constraints: BoxConstraints(
-                minHeight: 40,
-                minWidth: 180,
-              ),
-              child: InkResponse(
-                  onTap: () {
-                    _walletConnectModalService!.open(context: context);
-                  },
-                  child: Text('Connect'))),
+          WalletConnectModalConnect(
+            service: _walletConnectModalService!,
+          ),
           // WalletConnectModalConnect(
           //   service: _walletConnectModalService!,
           //   width: double.infinity,
@@ -197,7 +162,7 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildConnected() {
-    final SessionData session = _web3App!.sessions.getAll().first;
+    final SessionData session = widget.web3App.sessions.getAll().first;
 
     // Assign the button based on the type
 
@@ -218,7 +183,7 @@ class _WCMPageState extends State<WCMPage> with SingleTickerProviderStateMixin {
               padding: const EdgeInsets.all(8.0),
               child: SessionWidget(
                 session: session,
-                web3App: _web3App!,
+                web3App: widget.web3App,
                 launchRedirect: () {
                   _walletConnectModalService!.launchCurrentWallet();
                 },

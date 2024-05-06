@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> initialize() async {
     _web3App = Web3App(
       core: Core(
-        projectId: 'DartDefines.projectId',
+        projectId: DartDefines.projectId,
       ),
       metadata: const PairingMetadata(
         name: 'Flutter Dapp Example',
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          // WCMPage(web3App: _web3App!),
+          WCMPage(web3App: _web3App!),
           Positioned(
             bottom: 20,
             right: 20,

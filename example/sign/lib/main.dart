@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:walletconnect_flutter_dapp/home_page.dart';
-import 'package:walletconnect_flutter_dapp/pages/wcm_page.dart';
 import 'package:walletconnect_modal_flutter/walletconnect_modal_flutter.dart';
 
 void main() {
@@ -60,9 +59,9 @@ class _MyAppState extends State<MyApp> {
         ),
         home: SizedBox(
           width: double.infinity,
-          child: WCMPage(
-              // swapTheme: _swapTheme,
-              ),
+          child: MyHomePage(
+            swapTheme: _swapTheme,
+          ),
         ),
       ),
     );
