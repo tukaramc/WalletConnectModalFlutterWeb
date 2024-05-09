@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:w_common/disposable.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
@@ -386,11 +387,16 @@ class WalletConnectModalService extends ChangeNotifier
 
     try {
       await rebuildConnectionUri();
-      await urlUtils.instance.navigateDeepLink(
-        nativeLink: walletData.listing.mobile.native,
-        universalLink: walletData.listing.mobile.universal,
-        wcURI: wcUri!,
-      );
+      final isiOSWebMobile = kIsWeb &&
+          (defaultTargetPlatform == TargetPlatform.iOS ||
+              defaultTargetPlatform == TargetPlatform.iOS);
+      if (!isiOSWebMobile) {
+        await urlUtils.instance.navigateDeepLink(
+          nativeLink: walletData.listing.mobile.native,
+          universalLink: walletData.listing.mobile.universal,
+          wcURI: wcUri!,
+        );
+      }
     } on LaunchUrlException catch (e) {
       toastUtils.instance.show(
         ToastMessage(
@@ -499,6 +505,7 @@ class WalletConnectModalService extends ChangeNotifier
     web3App!.onSessionDelete.subscribe(
       onSessionDelete,
     );
+    _web3App!.onSessionEvent.subscribe(onSessionEvent);
     web3App!.core.relayClient.onRelayClientConnect.subscribe(
       onRelayClientConnect,
     );
@@ -547,6 +554,13 @@ class WalletConnectModalService extends ChangeNotifier
     _session = null;
 
     notifyListeners();
+  }
+
+  void onSessionEvent(SessionEvent? args) async {
+    if (args?.name == EventsConstants.chainChanged) {
+      final chainId = args?.data.toString() ?? '';
+      debugPrint("closinnng" + chainId);
+    }
   }
 
   @protected

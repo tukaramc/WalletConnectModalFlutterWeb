@@ -26,6 +26,7 @@ class SessionWidget extends StatefulWidget {
 class SessionWidgetState extends State<SessionWidget> {
   @override
   Widget build(BuildContext context) {
+    print('widget.session: ${widget.session.toString()}');
     final List<Widget> children = [
       Text(
         widget.session.peer.metadata.name,

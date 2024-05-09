@@ -1,4 +1,5 @@
 import 'package:appcheck/appcheck.dart';
+import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:walletconnect_modal_flutter/models/launch_url_exception.dart';
 import 'package:walletconnect_modal_flutter/services/utils/core/core_utils_singleton.dart';
@@ -95,7 +96,7 @@ class UrlUtils extends IUrlUtils {
 
     try {
       // Launch the link
-      if (nativeUri != null) {
+      if (nativeUri != null && !kIsWeb) {
         LoggerUtil.logger.i(
           'Navigating deep links. Launching native URI.',
         );
