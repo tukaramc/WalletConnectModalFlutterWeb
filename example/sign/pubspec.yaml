@@ -36,7 +36,7 @@ dependencies:
   walletconnect_flutter_v2:
     git:
       url: https://github.com/tukaramc/WalletConnectFlutterV2
-      ref: 791ed6d1f07507a07da201820dbaa23cf0bfa0d8
+      ref: 47bcd2cf09bd36ea9cfc169e3fba077a7129e39d
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
