@@ -30,7 +30,7 @@ class QRCodeAndWalletListPage extends StatelessWidget {
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height > 555
-                ? MediaQuery.of(context).size.height * 0.68
+                ? MediaQuery.of(context).size.height * 0.6
                 : null,
             child: QRCodeWidget(
               service: service,
