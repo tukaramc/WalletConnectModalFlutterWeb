@@ -28,9 +28,14 @@ class QRCodeAndWalletListPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          QRCodeWidget(
-            service: service,
-            logoPath: 'assets/walletconnect_logo_white.png',
+          Container(
+            height: MediaQuery.of(context).size.height > 555
+                ? MediaQuery.of(context).size.height * 0.68
+                : null,
+            child: QRCodeWidget(
+              service: service,
+              logoPath: 'assets/walletconnect_logo_white.png',
+            ),
           ),
           GridList(
             state: GridListState.extraShort,
